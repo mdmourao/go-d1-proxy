@@ -1,0 +1,65 @@
+### Variables
+@host = https://go-d1-proxy-v1.mdmourao.com
+@db = go_d1_db
+@clientId = {{$dotenv CF_ACCESS_CLIENT_ID}}}
+@clientSecret = {{$dotenv CF_ACCESS_CLIENT_SECRET}}
+
+### SELECT 1
+POST {{host}}/{{db}}
+CF-Access-Client-Id: {{clientId}}
+CF-Access-Client-Secret: {{clientSecret}}
+Content-Type: application/json
+
+{
+  "sql": "SELECT 1"
+}
+
+### SELECT with args
+POST {{host}}/{{db}}
+CF-Access-Client-Id: {{clientId}}
+CF-Access-Client-Secret: {{clientSecret}}
+Content-Type: application/json
+
+{
+  "sql": "SELECT * FROM my_table WHERE id = ?",
+  "args": [1]
+}
+
+### Create mascots table
+POST {{host}}/{{db}}
+CF-Access-Client-Id: {{clientId}}
+CF-Access-Client-Secret: {{clientSecret}}
+Content-Type: application/json
+
+{
+  "sql": "CREATE TABLE IF NOT EXISTS mascots (id INTEGER PRIMARY KEY AUTOINCREMENT, language TEXT NOT NULL, name TEXT NOT NULL, description TEXT)"
+}
+
+### Populate mascots
+POST {{host}}/{{db}}
+CF-Access-Client-Id: {{clientId}}
+CF-Access-Client-Secret: {{clientSecret}}
+Content-Type: application/json
+
+{
+  "sql": "INSERT INTO mascots (language, name, description) VALUES (?, ?, ?), (?, ?, ?), (?, ?, ?), (?, ?, ?), (?, ?, ?), (?, ?, ?), (?, ?, ?)",
+  "args": [
+    "Go", "Gopher", "A blue cartoon gopher designed by Renee French",
+    "Python", "Python", "Two intertwined snakes from the official logo",
+    "Rust", "Ferris", "An orange crab, the unofficial mascot of Rust",
+    "Perl", "Camel", "A camel popularized by O'Reilly's Programming Perl book",
+    "PHP", "ElePHPant", "A blue elephant designed by Vincent Pontier",
+    "Linux", "Tux", "A penguin created by Larry Ewing",
+    "Java", "Duke", "A character originally created for Sun's Star7 device"
+  ]
+}
+
+### Select all mascots
+POST {{host}}/{{db}}
+CF-Access-Client-Id: {{clientId}}
+CF-Access-Client-Secret: {{clientSecret}}
+Content-Type: application/json
+
+{
+  "sql": "SELECT * FROM mascots"
+}

@@ -1,0 +1,21 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "go-d1-proxy",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-04-26",
+	"observability": {
+		"enabled": true
+	},
+	"upload_source_maps": true,
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"workers_dev": false,
+	"d1_databases": [
+		{
+			"binding": "go_d1_db",
+			"database_name": "go-d1-db",
+			"database_id": "48de9fa3-27ed-425a-a31c-323ec7fd3fec"
+		}
+	]
+}
