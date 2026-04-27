@@ -19,13 +19,20 @@ export default {
     }
 
     try {
-      const body = await request.json() as { sql: string; args?: unknown[]};
+      const body = await request.json() as { sql: string; args?: unknown[]; isExec?: boolean };
       const stmt = db.prepare(body.sql).bind(...(body.args || []));
 
-      const { results } = await stmt.all();
-      return new Response(JSON.stringify(results), {
-        headers: { "Content-Type": "application/json" }
-      });
+      if (body.isExec) {
+        const result = await stmt.run();
+        return new Response(JSON.stringify(result), {
+          headers: { "Content-Type": "application/json" }
+        });
+      } else {
+        const { results } = await stmt.all();
+        return new Response(JSON.stringify(results), {
+          headers: { "Content-Type": "application/json" }
+        });
+      }
 
     } catch (e: any) {
       return new Response(JSON.stringify({ error: e.message }), {
