@@ -24,7 +24,11 @@ export default {
 
       if (body.isExec) {
         const result = await stmt.run();
-        return new Response(JSON.stringify(result), {
+        const response = {
+          changes: result.meta?.changes ?? 0,
+          last_row_id: result.meta?.last_row_id ?? 0,
+        };
+        return new Response(JSON.stringify(response), {
           headers: { "Content-Type": "application/json" }
         });
       } else {
