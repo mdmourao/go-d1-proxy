@@ -73,5 +73,6 @@ Content-Type: application/json
 
 {
   "sql": "UPDATE mascots SET description = ? WHERE name = ?",
-  "args": ["A character originally created for Sun's Star7 device, now owned by Oracle", "Duke"]
+  "args": ["A character originally created for Sun's Star7 device, now owned by Oracle", "Duke"],
+  "isExec": true
 }
