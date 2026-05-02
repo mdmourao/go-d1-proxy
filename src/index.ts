@@ -32,8 +32,9 @@ export default {
           headers: { "Content-Type": "application/json" }
         });
       } else {
-        const { results } = await stmt.all();
-        return new Response(JSON.stringify(results), {
+        const raw = await stmt.raw({ columnNames: true }) as unknown[][];
+        const [columns = [], ...rows] = raw;
+        return new Response(JSON.stringify({ columns, rows }), {
           headers: { "Content-Type": "application/json" }
         });
       }
