@@ -1,6 +1,6 @@
 ### Variables
-@host = https://go-d1-proxy-v1.mdmourao.com
-@db = go_d1_db
+@host = {{$dotenv HOST}}
+@db = {{$dotenv DB}}
 @clientId = {{$dotenv CF_ACCESS_CLIENT_ID}}
 @clientSecret = {{$dotenv CF_ACCESS_CLIENT_SECRET}}
 
@@ -12,17 +12,6 @@ Content-Type: application/json
 
 {
   "sql": "SELECT 1"
-}
-
-### SELECT with args
-POST {{host}}/{{db}}
-CF-Access-Client-Id: {{clientId}}
-CF-Access-Client-Secret: {{clientSecret}}
-Content-Type: application/json
-
-{
-  "sql": "SELECT * FROM my_table WHERE id = ?",
-  "args": [1]
 }
 
 ### Create mascots table
